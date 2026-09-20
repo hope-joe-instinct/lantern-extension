@@ -37,7 +37,7 @@
       if (!el) continue;
       el.setAttribute(`data-${MARK}-block`, '');
       const mark = document.createElement('mark');
-      mark.dataset[MARK] = 'true';
+      mark.setAttribute(`data-${MARK}`, 'true');
       mark.style.cssText = 'background:#ffd86b;color:inherit;border-radius:3px;padding:1px 2px;box-shadow:0 0 0 2px rgba(255,184,0,.14)';
       while (el.firstChild) mark.append(el.firstChild);
       el.append(mark); matches.push(mark);
