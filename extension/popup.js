@@ -12,7 +12,7 @@ async function run() {
   const query = q.value.trim(); if (!query) { setStatus('Describe an idea first.'); q.focus(); return; }
   search.disabled = true; nav.style.display = 'none'; setStatus('Reading visible passages…');
   try {
-    [tabId] = (await chrome.tabs.query({ active:true, currentWindow:true })).map(t => t.id);
+    { const tabs = await chrome.tabs.query({}); const target = tabs.find(t => t.active && /^https?:/.test(t.url || '')) || tabs.find(t => /^https?:/.test(t.url || '')); tabId = target?.id; if (!tabId) throw new Error('Open an ordinary webpage first.'); }
     await ensureContent();
     const page = await sendTab({ type:'LANTERN_EXTRACT' });
     if (!page.passages?.length) throw new Error('No searchable text found on this page.');

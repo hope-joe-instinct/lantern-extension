@@ -5,11 +5,13 @@
   "description": "Find and highlight ideas on webpages with semantic search.",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "host_permissions": [
-    "http://127.0.0.1:8787/*",
-    "http://localhost:8787/*"
+    "https://*.workers.dev/*",
+    "https://*/*",
+    "http://*/*"
   ],
   "action": {
     "default_title": "Lantern",
@@ -28,5 +30,19 @@
     "32": "icon32.png",
     "48": "icon48.png",
     "128": "icon128.png"
-  }
+  },
+  "options_page": "options.html",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxRpe83YIUUwwPOiPU7h0BWpaM/eGm+8s5KNcJPK7BbZ9qtlcywZ9YUop/knmaHGcutt6dTT4NITRwCk7fj89JWkjDvxWcaCHCLH+yVJOWx7BZqjW5E/ZYaKiZ6wyJ4oSN8jCh3/GxgOZ0KXLFGtHBdJOI4RbHS22XL0E7ag6GT//Yj4snRV1+R52jq3M+ztWpLqklogRoyUEQoy7IHXJJ4IvZqGaIGF2bjysiXBdpE4Z58emy0T0LOdqJfLuI6LPLZog7hcda+Xb6TzoIxuWxfvRNVMhoXuud3LmbUlel74KeCWwiz11irJprlYQmlzQR7WnoNeykQY93S+c18da9QIDAQAB",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
 }

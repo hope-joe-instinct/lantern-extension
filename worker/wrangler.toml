@@ -1,0 +1,16 @@
+name = "lantern-private-alpha"
+main = "worker.mjs"
+compatibility_date = "2026-09-01"
+workers_dev = true
+
+[vars]
+KILL_SWITCH = "false"
+
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+  [ratelimits.simple]
+  limit = 20
+  period = 60
+
+preview_urls = false

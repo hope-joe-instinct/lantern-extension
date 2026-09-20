@@ -1,0 +1,3 @@
+const api=document.querySelector('#api'),token=document.querySelector('#token'),status=document.querySelector('#status');
+chrome.storage.local.get(['lanternApiUrl','lanternInstallToken']).then(v=>{api.value=v.lanternApiUrl||'';token.value=v.lanternInstallToken||''});
+document.querySelector('#save').addEventListener('click',async()=>{const url=api.value.trim().replace(/\/$/,''); if(!/^https:\/\//.test(url)||!token.value.trim()){status.textContent='Enter an HTTPS Worker URL and token.';return;} await chrome.storage.local.set({lanternApiUrl:url,lanternInstallToken:token.value.trim()});status.textContent='Saved.';});

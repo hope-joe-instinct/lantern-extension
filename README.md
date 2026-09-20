@@ -4,7 +4,7 @@ Lantern is a Chrome extension that finds ideas on ordinary webpages. Describe a 
 
 ## Architecture
 
-The extension never contains a TypeSafe API key. It sends only the query and extracted visible passages to the local proxy in `server/`. The proxy reads `TYPESAFE_API_KEY` from its environment and calls `POST https://api.typesafe.ai/v1/systemone` with `jev-latest`. For a distributed build, deploy the same proxy behind authentication and rate limits, then change `LANTERN_API_URL` in `extension/background.js`.
+The extension never contains a TypeSafe API key. It sends only the query and extracted visible passages to the paired backend. The private-alpha Cloudflare Worker in `worker/` reads `TYPESAFE_API_KEY` only from encrypted secret storage and calls `POST https://api.typesafe.ai/v1/systemone` with pinned `jev-1.13.0`. Pair each installed extension from its Options page with the Worker URL and a random install token.
 
 Data sent per search: the user's query, page URL/title, and extracted visible text passages. Nothing is sent until the user presses Search.
 
@@ -12,11 +12,11 @@ Data sent per search: the user's query, page URL/title, and extracted visible te
 
 1. Use Node 20 or newer.
 2. Copy `.env.example` to `.env` and set `TYPESAFE_API_KEY`.
-3. Run `set -a; . ./.env; set +a; npm start`.
+3. For local proxy development, run `set -a; . ./.env; set +a; npm start`. For private alpha, deploy `worker/` and enter required values only as encrypted Worker secrets.
 4. Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `extension/`.
-5. Open an ordinary `http` or `https` webpage and click Lantern.
+5. Open Lantern settings, enter the HTTPS Worker URL and install token, then open an ordinary `http` or `https` webpage and click Lantern.
 
-During local development, leave `ALLOWED_ORIGIN` unset to allow Chrome extension origins. Set it to the exact extension origin in any shared environment.
+The Worker requires an exact `ALLOWED_ORIGINS` extension origin. The manifest public key keeps Lantern's extension ID stable across unpacked installations. Do not put the install token or TypeSafe key in the source tree or ZIP.
 
 ## Tests
 
