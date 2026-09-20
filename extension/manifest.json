@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Lantern",
+  "version": "0.1.0",
+  "description": "Find and highlight ideas on webpages with semantic search.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["http://127.0.0.1:8787/*", "http://localhost:8787/*"],
+  "action": {
+    "default_title": "Lantern",
+    "default_popup": "popup.html"
+  },
+  "background": { "service_worker": "background.js", "type": "module" }
+}
